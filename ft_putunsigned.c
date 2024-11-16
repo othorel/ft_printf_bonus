@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putunsigned.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 17:53:27 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 18:23:24 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:40:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_print_unsigned(unsigned long nb)
 {
 	int				total;
 	unsigned long	nbr;
-	
+
 	total = 0;
 	nbr = nb;
 	if (nbr > 100)
@@ -28,10 +28,11 @@ int	ft_print_unsigned(unsigned long nb)
 	total = total + ft_putchar((nbr % 10) + '0');
 	return (total);
 }
+
 static int	ft_nbdigit(unsigned long nb)
 {
 	int	len;
-	
+
 	len = 0;
 	if (nb == 0)
 		return (1);
@@ -43,10 +44,11 @@ static int	ft_nbdigit(unsigned long nb)
 	return (len);
 }
 
-static int	ft_putvalue(char *start, int *size, t_list *format, unsigned long nb)
+static int	ft_putvalue(char *start, int *size,
+			t_list *format, unsigned long nb)
 {
 	int		len;
-	
+
 	len = ft_nbdigit(nb);
 	*size = len;
 	if (format->precision > len)
@@ -65,8 +67,8 @@ static int	ft_putvalue(char *start, int *size, t_list *format, unsigned long nb)
 
 static int	ft_print_u(int len, unsigned long nb, t_list format)
 {
-	int total;
-	
+	int	total;
+
 	total = 0;
 	if (nb == 0 && format.min && format.min < len)
 		total = total + ft_putchar(' ');
@@ -83,7 +85,7 @@ int	ft_putunsigned(unsigned long nb, t_list format)
 	int		size;
 	int		total;
 	char	start;
-	
+
 	total = 0;
 	len = ft_putvalue(&start, &size, &format, nb);
 	while (size + total < format.min)
@@ -95,4 +97,3 @@ int	ft_putunsigned(unsigned long nb, t_list format)
 		total = total + ft_putchar(' ');
 	return (total);
 }
-

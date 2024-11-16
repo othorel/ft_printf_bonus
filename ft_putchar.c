@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:27:36 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 15:28:31 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:41:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_putchar(char c)
 int	ft_put_char(char c, t_list format)
 {
 	int	len;
-	
+
 	len = 0;
 	while (len + 1 < format.min)
 		len = len + ft_putchar(' ');

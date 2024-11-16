@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:31:47 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 16:50:12 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:21:18 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	ft_put_str(char *str, t_list format)
 	else
 		len = ft_strlen(str);
 	while (size + len < format.min)
-		size = size + ft_put_char(' ');
+		size = size + ft_putchar(' ');
 	if (!format.dot)
 		format.precision = -1;
 	if (!str)
@@ -59,6 +59,6 @@ int	ft_put_str(char *str, t_list format)
 	else
 		size = size + ft_putstr_len(str, format.precision);
 	while (size < format.off)
-		size = size + ft_put_char(' ');
+		size = size + ft_putchar(' ');
 	return (size);
 }

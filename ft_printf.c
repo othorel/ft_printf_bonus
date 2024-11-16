@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 09:33:37 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 19:40:25 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:41:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,29 @@ int	parse_normal(const char *specifier, va_list *args, t_list format)
 	return (len);
 }
 
-void	parse_flags(const char *str, t_list *format)
+void	parse_flags(t_list *format, const char *str, int *len)
 {
-	while (*str == '-' || *str == '0' || *str == '#'
-		|| *str == ' ' || *str == '+')
+	if (*str == '#')
+		format->hash = 1;
+	else if (*str == ' ')
+		format->space = 1;
+	else if (*str == '+')
+		format->plus = 1;
+	else if (*str == '0')
 	{
-		if (*str == '-')
-			format->min = 1;
-		else if (*str == '0')
-			format->zero = 1;
-		else if (*str == '#')
-			format->hash = 1;
-		else if (*str == ' ')
-			format->space = 1;
-		else if (*str == '+')
-			format->plus = 1;
-		str++;
+		format->zero_off = ft_atoi(str + 2, len);
+		format->zero = 1;
 	}
-	format->specifier = *str;
+	else if (*str == '-')
+	{
+		format->off = ft_atoi(str + 2, len);
+		format->min = 1;
+	}
+	else if (*str == '.')
+	{
+		format->precision = ft_atoi(str + 2, len);
+		format->dot = 1;
+	}
 }
 
 int	parse(const char *str, va_list *args, int *len)
@@ -66,7 +71,7 @@ int	parse(const char *str, va_list *args, int *len)
 	while (is_in_set(str[(*len) + 1], "0123456789# +-."))
 	{
 		if (is_in_set(str[(*len) + 1], "# +0-."))
-			parse_flags(&list, str + (*len) + 1);
+			parse_flags(&list, str + (*len), len);
 		else
 		{
 			list.min = ft_atoi(str + (*len) + 1, len);
@@ -81,28 +86,21 @@ int	parse(const char *str, va_list *args, int *len)
 
 int	ft_printf(const char *format, ...)
 {
-	va_list		args;
-	t_list		fmt;
-	const char	*next;
-	int			i;
-	int			len;
+	va_list	args;
+	int		len;
+	int		total;
 
-	i = 0;
-	len = 0;
 	va_start(args, format);
-	while (format[i])
+	len = 0;
+	total = 0;
+	while (format[len])
 	{
-		if (format[i] == '%' && format[i + 1])
-		{
-			init_specifier(&fmt);
-			next = parse_flags(&format[i + 1], &fmt);
-			len = len + parse(format + i + 1, &args, &fmt);
-			i = (int)(next - format - 1);
-		}
+		if (format[len] == '%')
+			total = total + parse(format + len, &args, &len);
 		else
-			len = len + ft_putchar(format[i]);
-		i++;
+			total = total + ft_putchar(format[len]);
+		len++;
 	}
 	va_end(args);
-	return (len);
+	return (total);
 }

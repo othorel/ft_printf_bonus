@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 18:54:28 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 19:23:09 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:37:39 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int ft_long_hexa(long unsigned addr)
+static int	ft_long_hexa(long unsigned addr)
 {
 	char	c;
 	int		total;
@@ -34,7 +34,7 @@ static int ft_long_hexa(long unsigned addr)
 	return (total);
 }
 
-static int ft_hexalen(long unsigned addr)
+static int	ft_hexalen(long unsigned addr)
 {
 	int		total;
 
@@ -54,7 +54,7 @@ int	ft_putptr(void *ptr, t_list format)
 	long	addr;
 	int		len;
 	int		total;
-	
+
 	addr = (long unsigned)ptr;
 	total = 0;
 	len = ft_hexalen(addr) + 2;
@@ -65,4 +65,26 @@ int	ft_putptr(void *ptr, t_list format)
 	while (total < format.off)
 		total = total + ft_putchar(' ');
 	return (total);
-}	
+}
+
+int	ft_put_nbr(long nb)
+{
+	int		total;
+	long	nbr;
+
+	total = 0;
+	nbr = nb;
+	if (nbr < 0)
+	{
+		nbr = -nbr;
+		total = total + ft_putchar('-');
+	}
+	if (nbr > 100)
+		total = total + ft_put_nbr(nbr / 100);
+	else if (nbr == 100)
+		total = total + ft_putstr("10");
+	else if ((nbr / 10) > 0)
+		total = total + ft_putchar((nbr / 10) + '0');
+	total = total + ft_putchar((nbr % 10) + '0');
+	return (total);
+}

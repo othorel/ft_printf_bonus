@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthexa.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 18:26:30 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 18:51:18 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:36:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	ft_putnbr_base(int nb, char *base)
 	unsigned int	nbr;
 	unsigned int	base_len;
 	int				total;
-	
+
 	total = 0;
 	nbr = nb;
 	base_len = ft_strlen(base);
@@ -28,14 +28,14 @@ static int	ft_putnbr_base(int nb, char *base)
 	}
 	else
 		total = total + ft_putchar(base[nbr]);
-	return (total);	
+	return (total);
 }
 
-static int ft_hexa_len(int nb)
+static int	ft_hexa_len(int nb)
 {
-	int			total;
+	int				total;
 	unsigned int	nbr;
-	
+
 	total = 0;
 	nbr = nb;
 	if (nbr >= 16)
@@ -45,12 +45,13 @@ static int ft_hexa_len(int nb)
 	}
 	else
 		total++;
-	return (total);	
+	return (total);
 }
+
 static int	ft_value(char *start, int *size, t_list *format, int nb)
 {
 	int		len;
-	
+
 	len = ft_hexa_len(nb);
 	*size = len;
 	if (format->precision > len)
@@ -65,15 +66,12 @@ static int	ft_value(char *start, int *size, t_list *format, int nb)
 		format->min = format->precision;
 	return (len);
 }
+
 static int	ft_print_x(int upper, int len, int nb, t_list format)
 {
 	int		total;
-	int		len;
-	char	start;
-	int		size;
-	
+
 	total = 0;
-	len = 0;
 	if (nb == 0 && format.min && format.min < len)
 		total = total + ft_putchar(' ');
 	else if (nb == 0 && format.dot && !format.precision && format.min >= len)
@@ -88,13 +86,13 @@ static int	ft_print_x(int upper, int len, int nb, t_list format)
 	return (total);
 }
 
-int ft_puthexa(int nb, int upper, t_list format)
+int	ft_puthexa(int nb, int upper, t_list format)
 {
 	int		len;
 	int		total;
 	char	start;
 	int		size;
-	
+
 	total = 0;
 	len = ft_value(&start, &size, &format, nb);
 	while (size + total < format.min)

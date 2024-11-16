@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olthorel <olthorel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 16:01:48 by olthorel          #+#    #+#             */
-/*   Updated: 2024/11/15 18:55:08 by olthorel         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:27:46 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ static int	print_digit(int len, long nb, t_list format)
 	else if (nb == 0 && format.dot && !format.precision && format.min >= len)
 		total = total + ft_putchar(' ');
 	else if (!(nb == 0 && format.dot && !format.precision))
-		total = total + print_number(nb);
+		total = total + ft_put_nbr(nb);
 	return (total);
 }
 
-int	ft_put_nbr(long nb, t_list format)
+int	ft_putnbr(long nb, t_list format)
 {
 	int		total;
 	int		len;
